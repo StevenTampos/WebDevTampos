@@ -1,0 +1,44 @@
+ body {
+    width: 2000px;
+    height: 2000px;
+}
+
+.headerdiv {
+    height: 200px; 
+    width: 1000px; 
+    background-color: green; 
+    color: black; 
+    margin: 5px;
+}
+
+.bodydiv {
+    display: flex;
+}
+
+#bodymain {
+    height: 600px; 
+    width: 790px; 
+    background-color: orange; 
+    color: black; 
+    margin: 5px;
+}
+
+#sidemain {
+    height: 600px; 
+    width: 200px; 
+    background-color: blue; 
+    color: black; 
+    margin: 5px;
+}
+
+.footerdiv {
+    height: 200px; 
+    width: 1000px; 
+    background-color: darkred; 
+    color: black; 
+    margin: 5px;
+}
+
+.footerdiv p {
+    margin: 0px;
+}
