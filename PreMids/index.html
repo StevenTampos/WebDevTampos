@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="img/svg+xml" href="img/usc-seal.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Tampos Portfolio</title>
+</head>
+<body>
+    <header>
+        <h1>John Steven Tampos</h1>
+        <h2>Web Development - 1</h2>
+        <button id="theme-toggle">
+            <img id="theme-icon" src="img/light.png" alt="Light Mode" />
+        </button>        
+          
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#about"><i class="fas fa-laptop-code"></i> About me</a></li>
+            <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
+            <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="about" class="section">
+            <h2><i class="fas fa-user"></i> About Me</h2>
+            <div class="about-content">
+                <img src="img/profile-pic.jpg" alt="John Steven Tampos" class="profile-picture">
+                <p>Hello! I'm <strong>Steven</strong>, A passionate tech enthusiast with a deep interest in information systems, web development, video editing and gaming. My portfolio explores my skills in technology and their applications in the modern world.</p>
+            </div>
+
+            <div class="video-container">
+                <div class="video">
+                    <h3>One of my video edits</h3>
+                    <video id="video1" controls>
+                        <source src="video/v1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <iframe id="youtube1" style="display:none;" src="https://www.youtube.com/embed/n-IJ0_ehr9A" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video">
+                    <h3>One of my gaming clips</h3>
+                    <video id="video2" controls>
+                        <source src="video/v2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <iframe id="youtube2" style="display:none;" src="https://www.youtube.com/embed/I2Hk3FYLwJU" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+    <section id="skills" class="section"> 
+        <h2><i class="fas fa-code"></i> Skills</h2> 
+        <div class="skills-container">
+            <div class="skill" id="html">
+                <img src="img/html-icon.png" alt="HTML" class="skill-icon">
+                <p>HTML is the standard markup language used to create web pages and web applications. I am proficient in structuring content, creating forms, and ensuring semantic HTML for accessibility.</p>
+            </div>
+            
+            <div class="skill" id="css">
+                <img src="img/css-icon.png" alt="CSS" class="skill-icon">
+                <p>CSS is used for styling web pages. I have experience with modern CSS techniques like Flexbox, Grid, and responsive design principles for adaptive layouts.</p>
+            </div>
+        
+            <div class="skill" id="javascript">
+                <img src="img/js-icon.png" alt="JavaScript" class="skill-icon">
+                <p>JavaScript is essential for adding interactivity to websites. I am skilled in both vanilla JavaScript and frameworks like Node.js.</p>
+            </div>  
+            
+            <div class="skill" id="video-editing">
+                <img src="img/ae-icon.png" alt="After Effects" class="skill-icon">
+                <p>Adobe After Effects is a powerful tool for video post-production, motion graphics, and visual effects. I use After Effects to create dynamic animations, enhance video productions, and design cinematic sequences for various media projects.</p>
+            </div> 
+
+            <div class="skill" id="photo-editing">
+                <img src="img/ps-icon.png" alt="Photoshop" class="skill-icon">
+                <p>Adobe Photoshop is the industry standard for image manipulation and graphic design. I have experience in photo editing, compositing, retouching, and creating graphics for websites, social media, and other digital platforms.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section"> 
+        <h2><i class="fas fa-project-diagram"></i> Projects</h2> 
+        <div class="projects-container">
+            <div class="project-card">
+                <h3>Tao - Discord Bot</h3>
+                <p>
+                    Inspired by the character Hu Tao from Genshin Impact, "Tao" is a multipurpose Discord bot that manages and moderates servers. It features dedicated music capabilities powered by Lavalink, entertainment options like a currency game, meme functionalities, and more!
+                </p>
+            </div>
+            <div class="project-card">
+                <h3>Alcohol Detector Using MQ3 Sensor</h3>
+                <p>
+                    Developed as a research capstone project during my senior year, this alcohol detector uses an MQ3 sensor powered by Arduino. It calculates approximate Blood Alcohol Concentration (BAC) and was awarded the best in research for its advanced PPM alcohol detection. The device was intended for use in schools to test students for alcohol consumption upon entry.
+                </p>
+            </div>
+        </div>
+    </section>
+        <section id="contact" class="section">
+            <h2><i class="fas fa-envelope"></i> Contact Me</h2>
+            <div class="contact-container">
+                <div class="contact-card">
+                    <h3><i class="fas fa-school"></i> School Email</h3>
+                    <p><a href="mailto:23103016@usc.edu.ph">23103016@usc.edu.ph</a></p>
+                </div>
+                <div class="contact-card">
+                    <h3><i class="fas fa-address-card"></i> Student ID</h3>
+                    <p><strong>23103016</strong></p>
+                </div>
+                <div class="contact-card">
+                    <h3><i class="fas fa-envelope"></i> Personal Email</h3>
+                    <p><a href="mailto:johnsteventanpos@gmail.com">johnsteventanpos@gmail.com</a></p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p><i class="fas fa-registered"></i> 2024 Tampos. All rights reserved.</p>
+    </footer>
+
+    </script>
+    <script>
+        const themeToggle = document.getElementById("theme-toggle");
+        const themeIcon = document.getElementById("theme-icon");
+        themeToggle.addEventListener("click", () => {
+            const currentTheme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+
+            // Toggle theme
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('header').classList.toggle('dark-mode');
+            document.querySelector('#skills').classList.toggle('dark-mode');
+            document.querySelector('#projects').classList.toggle('dark-mode');
+            document.querySelector('#contact').classList.toggle('dark-mode');
+            document.querySelector('nav').classList.toggle('dark-mode');
+            document.querySelector('nav ul').classList.toggle('dark-mode');
+            document.querySelector('footer').classList.toggle('dark-mode');
+            
+            document.querySelectorAll('.section h2').forEach(function(sectionH2) {
+                sectionH2.classList.toggle('dark-mode');
+            });
+            document.querySelectorAll('.skill').forEach(function(skill) {
+                skill.classList.toggle('dark-mode');
+            });
+            document.querySelectorAll('.project-card').forEach(function(projectcard) {
+                projectcard.classList.toggle('dark-mode');
+            });
+            document.querySelectorAll('.contact-card').forEach(function(contactcard) {
+                contactcard.classList.toggle('dark-mode');
+            });
+            // Update nav ul li a styles for dark mode
+            document.querySelectorAll('nav ul li').forEach(function(navLi) {
+                navLi.classList.toggle('dark-mode');
+                navLi.querySelector('a').classList.toggle('dark-mode');
+            });
+
+            // Update icon and alt text
+            if (currentTheme === "light") {
+                themeIcon.src = "img/dark.png"; // Path to your dark mode icon
+                themeIcon.alt = "Dark Mode";
+            } else {
+                themeIcon.src = "img/light.png"; // Path to your light mode icon
+                themeIcon.alt = "Light Mode";
+            }
+        });
+    </script>
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default anchor behavior
+      
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+      
+            if (targetElement) {
+              // Smooth scroll to the target section
+              window.scrollTo({
+                top: targetElement.offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+    </script>
+    <script>
+        // Function to check if the video can be played
+        function checkVideo(videoId, youtubeId) {
+            var video = document.getElementById(videoId);
+            var youtube = document.getElementById(youtubeId);
+
+            // Use fetch to check if the local video file exists
+            fetch(localSrc)
+                .then(response => {
+                    if (!response.ok) {
+                        // If the response is not OK (404 or other error), hide the video and show the YouTube iframe
+                        video.style.display = 'none';
+                        youtube.style.display = 'block';
+                    } else {
+                        // If the video can be played, ensure the YouTube iframe is hidden
+                        youtube.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    // If there's an error fetching the video (e.g., network error), show the YouTube video
+                    video.style.display = 'none';
+                    youtube.style.display = 'block';
+                });
+
+            // Check if the video can be played
+            video.onerror = function() {
+                // If there's an error, hide the video and show the YouTube iframe
+                video.style.display = 'none';
+                youtube.style.display = 'block';
+            };
+    
+            // Check if the video is not available
+            video.oncanplay = function() {
+                // If the video can play, hide the YouTube iframe
+                youtube.style.display = 'none';
+            };
+        }
+    
+        // Check both videos
+        checkVideo('video1', 'youtube1');
+        checkVideo('video2', 'youtube2');
+    </script>
+</body>
+</html>
