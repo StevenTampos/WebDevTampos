@@ -236,7 +236,7 @@ footer.dark-mode {
     padding: 20px; 
     border-radius: 10px; 
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); 
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease-in-out; 
     transform: scale(0.92);
 }
 #projects h2 {
@@ -261,7 +261,7 @@ footer.dark-mode {
     padding: 15px; 
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease-in-out; 
 }
 #projects.dark-mode {
     background-color: #bbbbbb; 
@@ -312,7 +312,7 @@ footer.dark-mode {
     padding: 20px; 
     border-radius: 10px; 
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); 
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease-in-out; 
     transform: scale(0.92);
 }
 #skills h2 {
