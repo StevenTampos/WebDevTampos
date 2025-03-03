@@ -7,6 +7,11 @@
 </head>
 
 <style>
+    body button {
+        margin: 10px;
+        padding: 5px;
+        width: 100px;
+    }
     body p {
         background-color: gray;
         margin: 10px;
@@ -16,20 +21,38 @@
 </style>
 
 <body>
-    <p id="box1">Statement 1</p>
-    <p id="box2">Statement 2</p>
-    <p id="box3">Statement 3</p>
+    <p id="p1">Statement 1</p>
+    <p id="p2">Statement 2</p>
+    <p id="p3">Statement 3</p>
+    <button id="b1">Reveal</button><br>
 
     <script>
-        const box1 = document.getElementId("box1");
-        const box2 = document.getElementId("box2");
-        const box3 = document.getElementId("box3");
+        const s1 = "Statement 1";
+        const s2 = "Statement 2";
+        const s3 = "Statement 3";
 
-        box1.addEventListener("mouseover", reveal);
-        box1.addEventListener("mouseout", hide);
+        let r = 0;
+        const b1 = document.getElementById("b1");
 
-        function reveal(box1) {
-            box1.style.background = "green";
+        b1.addEventListener("mouseover", reveal);
+        b1.addEventListener("mouseout", hide);
+
+        function reveal() {
+            document.getElementById("p1").innerHTML = "True";
+            document.getElementById("p1").style.backgroundColor = "lightgreen";
+            document.getElementById("p2").innerHTML = "False";
+            document.getElementById("p2").style.backgroundColor = "red";
+            document.getElementById("p3").innerHTML = "True";
+            document.getElementById("p3").style.backgroundColor = "lightgreen";
+        }
+
+        function hide() {
+            document.getElementById("p1").style.backgroundColor = "gray";
+            document.getElementById("p2").style.backgroundColor = "gray";
+            document.getElementById("p3").style.backgroundColor = "gray";
+            document.getElementById("p1").innerHTML = s1;
+            document.getElementById("p2").innerHTML = s2;
+            document.getElementById("p3").innerHTML = s3;
         }
     </script>
 </body>
