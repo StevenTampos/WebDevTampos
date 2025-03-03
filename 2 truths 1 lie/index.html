@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2 truths 1 lie</title>
+</head>
+
+<style>
+    body p {
+        background-color: gray;
+        margin: 10px;
+        padding: 5px;
+        width: 500px;
+    }
+</style>
+
+<body>
+    <p id="box1">Statement 1</p>
+    <p id="box2">Statement 2</p>
+    <p id="box3">Statement 3</p>
+
+    <script>
+        const box1 = document.getElementId("box1");
+        const box2 = document.getElementId("box2");
+        const box3 = document.getElementId("box3");
+
+        box1.addEventListener("mouseover", reveal);
+        box1.addEventListener("mouseout", hide);
+
+        function reveal(box1) {
+            box1.style.background = "green";
+        }
+    </script>
+</body>
+</html>
