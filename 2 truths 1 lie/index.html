@@ -10,9 +10,11 @@
     body button {
         margin: 10px;
         padding: 5px;
-        width: 100px;
+        width: 150px;
+        font-size: 20px;
     }
-    body p {
+    #p1, #p2, #p3 {
+        font-size: 20px;
         background-color: gray;
         margin: 10px;
         padding: 5px;
@@ -21,27 +23,43 @@
 </style>
 
 <body>
-    <p id="p1">Statement 1</p>
-    <p id="p2">Statement 2</p>
-    <p id="p3">Statement 3</p>
-    <button id="b1">Reveal</button><br>
+    <button id="p1">I love Coding!</button><br>
+    <button id="p2">I love studying!</button><br>
+    <button id="p3">I love Web development!</button><br>
+    <button id="b1">Reveal All</button>
 
     <script>
-        const s1 = "Statement 1";
-        const s2 = "Statement 2";
-        const s3 = "Statement 3";
-
-        let r = 0;
+        const p1 = document.getElementById("p1").innerHTML;
+        const p2 = document.getElementById("p2").innerHTML;
+        const p3 = document.getElementById("p3").innerHTML;
+        const s1 = document.getElementById("p1");
+        const s2 = document.getElementById("p2");
+        const s3 = document.getElementById("p3");
         const b1 = document.getElementById("b1");
 
-        b1.addEventListener("mouseover", reveal);
+        b1.addEventListener("mouseover", revealall);
+        s1.addEventListener("mouseover", reveal1);
+        s2.addEventListener("mouseover", reveal2);
+        s3.addEventListener("mouseover", reveal3);
+        s1.addEventListener("mouseout", hide);
+        s2.addEventListener("mouseout", hide);
+        s3.addEventListener("mouseout", hide);
         b1.addEventListener("mouseout", hide);
 
-        function reveal() {
+        function revealall() {
+            reveal1();
+            reveal2();
+            reveal3();
+        }
+        function reveal1() {
             document.getElementById("p1").innerHTML = "True";
             document.getElementById("p1").style.backgroundColor = "lightgreen";
+        }
+        function reveal2() {
             document.getElementById("p2").innerHTML = "False";
             document.getElementById("p2").style.backgroundColor = "red";
+        }
+        function reveal3() {
             document.getElementById("p3").innerHTML = "True";
             document.getElementById("p3").style.backgroundColor = "lightgreen";
         }
@@ -50,9 +68,9 @@
             document.getElementById("p1").style.backgroundColor = "gray";
             document.getElementById("p2").style.backgroundColor = "gray";
             document.getElementById("p3").style.backgroundColor = "gray";
-            document.getElementById("p1").innerHTML = s1;
-            document.getElementById("p2").innerHTML = s2;
-            document.getElementById("p3").innerHTML = s3;
+            document.getElementById("p1").innerHTML = p1;
+            document.getElementById("p2").innerHTML = p2;
+            document.getElementById("p3").innerHTML = p3;
         }
     </script>
 </body>
