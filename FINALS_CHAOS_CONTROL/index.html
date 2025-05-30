@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaos Control | Event Management</title>
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=lGdPtvw70t3MgVXpoYu_gRS8KgLRMa7AjVQVcswIR3g14LlM6p5qUeogWSXGWKYp7azbL8Rm8r_ykn3sGBbcxfq9RpTC-2OxGvpPB5dOb5VnjiQvoc_QApMJ114yHA3PBft9wk1MDfmFH3Hw1rolHpuotNPIVz3BUcD8Uw0zLVPFQH2nbO67pE_zfVSeySse65Ckg8_ZQRj6nZztPJ_0OTNV4v5xv0-aXHI9j5oqfQ4tKrXVT1C_MrmK0BfD11S7e34zZSD7zMvm4Wq0GfunQqlYboWIeJiba1K_T9H0AuykwsxfdrQmm6V60mLgYrOTSv7-73disb2G3tY2B7qGRU9mi_tfa2uCjkA0VJERAGWCrMu9Ogn_AByUleR0pASFN25Eow2BKXGqFAcVePPBkbs0LbiD90wZzjWnzGNHSIJ22GAud6CIWh4zFwgNXoffUO73rH-iLS9D6LmE010-1vJAMqgAhLTNuEhpjHflax_j8TozLVPTrtPM2gWywwqhHIyRN1d9B8i8NHVdFwgAlnFUKW4OG_CxkM7Mr9lBDq8xHyGGXXFnqfXa6gPTuJYZGar8d20wpaS3yvdpEWXg5eth7UHRhpxCh_ev0pIgsZi93Z8HULUFDRzUPLFNDcBVMOBK17u2rD1Q2dZ7JXf4heKxDg0lutJ6aXh3YMrVw9taNuNgtXlvRfVQbhpIVi5p4FgqX-7vySkEXGsWOsNtjI2fnLSStVnd6E6QgrJNrKA" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .event-card {
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .countdown {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #4f46e5;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
+        
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+        
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: #059669;
+        }
+        
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        .tab-active {
+            color: #4f46e5;
+            border-bottom: 2px solid #4f46e5;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-calendar-check text-indigo-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Chaos Control</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div id="loggedOutNav">
+                        <button onclick="showLoginModal()" class="px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            Login
+                        </button>
+                        <button class="ml-3 px-4 py-2 rounded-md text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none">
+                            Sign Up
+                        </button>
+                    </div>
+                    <div id="loggedInNav" class="hidden">
+                        <span id="userGreeting" class="mr-4 text-gray-600"></span>
+                        <button onclick="logout()" class="px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Login Required Message -->
+        <div id="loginRequiredMessage" class="bg-white rounded-lg shadow-md p-8 text-center">
+            <i class="fas fa-lock text-indigo-500 text-5xl mb-4"></i>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Login Required</h2>
+            <p class="text-gray-600 mb-6">Please login to access your events and manage RSVPs</p>
+            <button onclick="showLoginModal()" class="px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">
+                Login Now
+            </button>
+        </div>
+
+        <!-- Dashboard (Hidden until logged in) -->
+        <div id="dashboard" class="hidden">
+            <!-- Dashboard Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Event Dashboard</h1>
+                    <p class="text-gray-600">Manage your events and RSVPs in one place</p>
+                </div>
+                <button onclick="showCreateEventModal()" class="mt-4 md:mt-0 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Create New Event
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="border-b border-gray-200 mb-6">
+                <div class="flex -mb-px">
+                    <button onclick="switchTab('myEvents')" id="myEventsTab" class="tab-active py-4 px-6 font-medium text-sm focus:outline-none">
+                        My Events
+                    </button>
+                    <button onclick="switchTab('invitations')" id="invitationsTab" class="py-4 px-6 font-medium text-sm text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Invitations
+                    </button>
+                </div>
+            </div>
+
+            <!-- My Events Tab Content -->
+            <div id="myEventsContent" class="fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Event cards will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Invitations Tab Content -->
+            <div id="invitationsContent" class="hidden fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Invitation cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Login</h3>
+                <button onclick="hideLoginModal()" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter your email">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter your password">
+            </div>
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center">
+                    <input type="checkbox" id="remember" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                </div>
+                <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+            </div>
+            <button onclick="login()" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">
+                Login
+            </button>
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">
+                    Don't have an account? <a href="#" class="text-indigo-600 hover:text-indigo-500">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div id="createEventModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Create New Event</h3>
+                <button onclick="hideCreateEventModal()" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label for="eventName" class="block text-sm font-medium text-gray-700 mb-1">Event Name</label>
+                    <input type="text" id="eventName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter event name">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="eventDate" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <input type="date" id="eventDate" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label for="eventTime" class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                        <input type="time" id="eventTime" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div>
+                    <label for="eventLocation" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                    <input type="text" id="eventLocation" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter location">
+                </div>
+                <div>
+                    <label for="eventDescription" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="eventDescription" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter event description"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Privacy</label>
+                    <div class="flex space-x-4">
+                        <div class="flex items-center">
+                            <input type="radio" id="public" name="privacy" value="public" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" checked>
+                            <label for="public" class="ml-2 block text-sm text-gray-700">Public</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="private" name="privacy" value="private" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <label for="private" class="ml-2 block text-sm text-gray-700">Private</label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="inviteEmails" class="block text-sm font-medium text-gray-700 mb-1">Invite People (comma separated emails)</label>
+                    <input type="text" id="inviteEmails" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="email1@example.com, email2@example.com">
+                </div>
+                <div class="pt-4">
+                    <button onclick="createEvent()" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">
+                        Create Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div id="eventDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="detailsEventName" class="text-xl font-bold text-gray-800">Event Name</h3>
+                <button onclick="hideEventDetailsModal()" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between">
+                    <div class="flex items-center mb-2 md:mb-0">
+                        <div class="bg-indigo-100 p-2 rounded-full mr-3">
+                            <i class="fas fa-calendar text-indigo-600"></i>
+                        </div>
+                        <span id="detailsEventDate" class="text-gray-700">Date and Time</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="bg-indigo-100 p-2 rounded-full mr-3">
+                            <i class="fas fa-map-marker-alt text-indigo-600"></i>
+                        </div>
+                        <span id="detailsEventLocation" class="text-gray-700">Location</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-medium text-gray-800 mb-2">Description</h4>
+                    <p id="detailsEventDescription" class="text-gray-600">Event description will appear here.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-medium text-gray-800 mb-3">RSVP</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="respondToEvent('yes')" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none flex items-center">
+                            <i class="fas fa-check mr-2"></i> Yes
+                        </button>
+                        <button onclick="respondToEvent('maybe')" class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none flex items-center">
+                            <i class="fas fa-question mr-2"></i> Maybe
+                        </button>
+                        <button onclick="respondToEvent('no')" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none flex items-center">
+                            <i class="fas fa-times mr-2"></i> No
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-medium text-gray-800 mb-3">Guest List</h4>
+                    <div class="bg-white border border-gray-200 rounded-md overflow-hidden">
+                        <div class="grid grid-cols-3 bg-gray-50 p-3 border-b border-gray-200">
+                            <div class="font-medium text-gray-700">Name</div>
+                            <div class="font-medium text-gray-700">Email</div>
+                            <div class="font-medium text-gray-700">Status</div>
+                        </div>
+                        <div id="guestList" class="divide-y divide-gray-200">
+                            <!-- Guest list items will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-medium text-gray-800 mb-3">Add to Calendar</h4>
+                    <button class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none flex items-center">
+                        <i class="fas fa-calendar-plus mr-2"></i> Add to Google Calendar
+                    </button>
+                </div>
+                
+                <div id="eventOwnerControls" class="pt-4 border-t border-gray-200 hidden">
+                    <h4 class="font-medium text-gray-800 mb-3">Event Management</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none flex items-center">
+                            <i class="fas fa-edit mr-2"></i> Edit Event
+                        </button>
+                        <button onclick="deleteEvent()" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none flex items-center">
+                            <i class="fas fa-trash-alt mr-2"></i> Delete Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        let currentUser = null;
+        let currentEventId = null;
+        
+        const users = [
+            { id: 1, name: 'Admin User', email: 'admin@example.com', password: 'admin123', isAdmin: true },
+            { id: 2, name: 'Regular User', email: 'user@example.com', password: 'user123', isAdmin: false }
+        ];
+        
+        let events = [
+            {
+                id: 1,
+                name: 'Team Building Workshop',
+                date: '2023-12-15',
+                time: '14:00',
+                location: 'Conference Room A',
+                description: 'Join us for a fun team building workshop with activities designed to improve collaboration and communication.',
+                isPublic: true,
+                createdBy: 1,
+                guests: [
+                    { id: 1, name: 'Admin User', email: 'admin@example.com', status: 'yes' },
+                    { id: 2, name: 'Regular User', email: 'user@example.com', status: 'maybe' },
+                    { id: 3, name: 'Jane Smith', email: 'jane@example.com', status: 'no' }
+                ]
+            },
+            {
+                id: 2,
+                name: 'Project Kickoff Meeting',
+                date: '2023-12-20',
+                time: '10:00',
+                location: 'Virtual (Zoom)',
+                description: 'Kickoff meeting for our new project. We will discuss goals, timeline, and assign responsibilities.',
+                isPublic: false,
+                createdBy: 1,
+                guests: [
+                    { id: 1, name: 'Admin User', email: 'admin@example.com', status: 'yes' },
+                    { id: 2, name: 'Regular User', email: 'user@example.com', status: 'pending' }
+                ]
+            },
+            {
+                id: 3,
+                name: 'Monthly Book Club',
+                date: '2023-12-25',
+                time: '18:30',
+                location: 'City Library, Room 302',
+                description: 'This month we are reading "The Midnight Library" by Matt Haig. Come prepared to discuss!',
+                isPublic: true,
+                createdBy: 2,
+                guests: [
+                    { id: 1, name: 'Admin User', email: 'admin@example.com', status: 'pending' },
+                    { id: 2, name: 'Regular User', email: 'user@example.com', status: 'yes' }
+                ]
+            }
+        ];
+
+        // UI Functions
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+        
+        function hideLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+        
+        function showCreateEventModal() {
+            document.getElementById('createEventModal').classList.remove('hidden');
+        }
+        
+        function hideCreateEventModal() {
+            document.getElementById('createEventModal').classList.add('hidden');
+        }
+        
+        function showEventDetailsModal(eventId) {
+            currentEventId = eventId;
+            const event = events.find(e => e.id === eventId);
+            
+            if (event) {
+                document.getElementById('detailsEventName').textContent = event.name;
+                document.getElementById('detailsEventDate').textContent = formatDateTime(event.date, event.time);
+                document.getElementById('detailsEventLocation').textContent = event.location;
+                document.getElementById('detailsEventDescription').textContent = event.description;
+                
+                // Show owner controls if current user created the event
+                if (currentUser && event.createdBy === currentUser.id) {
+                    document.getElementById('eventOwnerControls').classList.remove('hidden');
+                } else {
+                    document.getElementById('eventOwnerControls').classList.add('hidden');
+                }
+                
+                // Populate guest list
+                const guestListContainer = document.getElementById('guestList');
+                guestListContainer.innerHTML = '';
+                
+                event.guests.forEach(guest => {
+                    const statusClass = getStatusClass(guest.status);
+                    const guestItem = document.createElement('div');
+                    guestItem.className = 'grid grid-cols-3 p-3';
+                    guestItem.innerHTML = `
+                        <div class="text-gray-800">${guest.name}</div>
+                        <div class="text-gray-600">${guest.email}</div>
+                        <div class="${statusClass}">${capitalizeFirstLetter(guest.status)}</div>
+                    `;
+                    guestListContainer.appendChild(guestItem);
+                });
+                
+                document.getElementById('eventDetailsModal').classList.remove('hidden');
+            }
+        }
+        
+        function hideEventDetailsModal() {
+            document.getElementById('eventDetailsModal').classList.add('hidden');
+            currentEventId = null;
+        }
+        
+        function switchTab(tab) {
+            const tabs = ['myEvents', 'invitations'];
+            
+            tabs.forEach(t => {
+                const tabButton = document.getElementById(`${t}Tab`);
+                const tabContent = document.getElementById(`${t}Content`);
+                
+                if (t === tab) {
+                    tabButton.classList.add('tab-active');
+                    tabButton.classList.remove('text-gray-500', 'hover:text-gray-700');
+                    tabContent.classList.remove('hidden');
+                } else {
+                    tabButton.classList.remove('tab-active');
+                    tabButton.classList.add('text-gray-500', 'hover:text-gray-700');
+                    tabContent.classList.add('hidden');
+                }
+            });
+            
+            if (tab === 'myEvents') {
+                renderMyEvents();
+            } else if (tab === 'invitations') {
+                renderInvitations();
+            }
+        }
+        
+        // Auth Functions
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                document.getElementById('userGreeting').textContent = `Hello, ${user.name}`;
+                document.getElementById('loggedOutNav').classList.add('hidden');
+                document.getElementById('loggedInNav').classList.remove('hidden');
+                document.getElementById('loginRequiredMessage').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                hideLoginModal();
+                
+                // Render events
+                renderMyEvents();
+            } else {
+                alert('Invalid email or password. Try admin@example.com / admin123 or user@example.com / user123');
+            }
+        }
+        
+        function logout() {
+            currentUser = null;
+            document.getElementById('loggedOutNav').classList.remove('hidden');
+            document.getElementById('loggedInNav').classList.add('hidden');
+            document.getElementById('loginRequiredMessage').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+        }
+        
+        // Event Functions
+        function createEvent() {
+            if (!currentUser) return;
+            
+            const name = document.getElementById('eventName').value;
+            const date = document.getElementById('eventDate').value;
+            const time = document.getElementById('eventTime').value;
+            const location = document.getElementById('eventLocation').value;
+            const description = document.getElementById('eventDescription').value;
+            const isPublic = document.getElementById('public').checked;
+            const inviteEmails = document.getElementById('inviteEmails').value;
+            
+            if (!name || !date || !time || !location) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const newId = events.length > 0 ? Math.max(...events.map(e => e.id)) + 1 : 1;
+            
+            const guests = [
+                { id: currentUser.id, name: currentUser.name, email: currentUser.email, status: 'yes' }
+            ];
+            
+            if (inviteEmails) {
+                const emails = inviteEmails.split(',').map(email => email.trim());
+                emails.forEach(email => {
+                    const existingUser = users.find(u => u.email === email);
+                    if (existingUser) {
+                        guests.push({
+                            id: existingUser.id,
+                            name: existingUser.name,
+                            email: existingUser.email,
+                            status: 'pending'
+                        });
+                    } else {
+                        guests.push({
+                            id: null,
+                            name: email.split('@')[0],
+                            email: email,
+                            status: 'pending'
+                        });
+                    }
+                });
+            }
+            
+            const newEvent = {
+                id: newId,
+                name,
+                date,
+                time,
+                location,
+                description,
+                isPublic,
+                createdBy: currentUser.id,
+                guests
+            };
+            
+            events.push(newEvent);
+            hideCreateEventModal();
+            renderMyEvents();
+            
+            // Reset form
+            document.getElementById('eventName').value = '';
+            document.getElementById('eventDate').value = '';
+            document.getElementById('eventTime').value = '';
+            document.getElementById('eventLocation').value = '';
+            document.getElementById('eventDescription').value = '';
+            document.getElementById('public').checked = true;
+            document.getElementById('inviteEmails').value = '';
+        }
+        
+        function deleteEvent() {
+            if (!currentUser || !currentEventId) return;
+            
+            const event = events.find(e => e.id === currentEventId);
+            if (event && event.createdBy === currentUser.id) {
+                if (confirm('Are you sure you want to delete this event?')) {
+                    events = events.filter(e => e.id !== currentEventId);
+                    hideEventDetailsModal();
+                    renderMyEvents();
+                }
+            }
+        }
+        
+        function respondToEvent(response) {
+            if (!currentUser || !currentEventId) return;
+            
+            const eventIndex = events.findIndex(e => e.id === currentEventId);
+            if (eventIndex !== -1) {
+                const guestIndex = events[eventIndex].guests.findIndex(g => g.id === currentUser.id);
+                
+                if (guestIndex !== -1) {
+                    events[eventIndex].guests[guestIndex].status = response;
+                } else {
+                    events[eventIndex].guests.push({
+                        id: currentUser.id,
+                        name: currentUser.name,
+                        email: currentUser.email,
+                        status: response
+                    });
+                }
+                
+                hideEventDetailsModal();
+                renderMyEvents();
+                renderInvitations();
+            }
+        }
+        
+        // Render Functions
+        function renderMyEvents() {
+            if (!currentUser) return;
+            
+            const container = document.querySelector('#myEventsContent > div');
+            container.innerHTML = '';
+            
+            const myEvents = events.filter(event => 
+                event.createdBy === currentUser.id || 
+                event.guests.some(guest => guest.id === currentUser.id && guest.status === 'yes')
+            );
+            
+            if (myEvents.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-calendar-plus text-gray-300 text-5xl mb-4"></i>
+                        <h3 class="text-xl font-medium text-gray-700 mb-2">No events yet</h3>
+                        <p class="text-gray-500 mb-4">Create your first event to get started</p>
+                        <button onclick="showCreateEventModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none">
+                            Create Event
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            myEvents.forEach(event => {
+                const card = createEventCard(event);
+                container.appendChild(card);
+            });
+        }
+        
+        function renderInvitations() {
+            if (!currentUser) return;
+            
+            const container = document.querySelector('#invitationsContent > div');
+            container.innerHTML = '';
+            
+            const invitations = events.filter(event => 
+                event.createdBy !== currentUser.id && 
+                event.guests.some(guest => guest.id === currentUser.id && (guest.status === 'pending' || guest.status === 'maybe'))
+            );
+            
+            if (invitations.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-envelope-open text-gray-300 text-5xl mb-4"></i>
+                        <h3 class="text-xl font-medium text-gray-700 mb-2">No invitations</h3>
+                        <p class="text-gray-500">You don't have any pending invitations</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            invitations.forEach(event => {
+                const card = createEventCard(event, true);
+                container.appendChild(card);
+            });
+        }
+        
+        function createEventCard(event, isInvitation = false) {
+            const card = document.createElement('div');
+            card.className = 'event-card bg-white rounded-lg shadow-md overflow-hidden';
+            
+            const eventDate = new Date(`${event.date}T${event.time}`);
+            const now = new Date();
+            const timeLeft = eventDate - now;
+            
+            let countdownText = '';
+            if (timeLeft < 0) {
+                countdownText = 'Event has ended';
+            } else {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                
+                if (days > 0) {
+                    countdownText = `${days} day${days !== 1 ? 's' : ''} ${hours} hr${hours !== 1 ? 's' : ''}`;
+                } else {
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    countdownText = `${hours} hr${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
+                }
+            }
+            
+            const userStatus = event.guests.find(guest => guest.id === currentUser.id)?.status || 'pending';
+            const statusBadge = getStatusBadge(userStatus);
+            
+            card.innerHTML = `
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-semibold text-gray-800">${event.name}</h3>
+                        ${isInvitation ? statusBadge : ''}
+                    </div>
+                    <div class="flex items-center text-gray-600 mb-2">
+                        <i class="fas fa-calendar-day mr-2"></i>
+                        <span>${formatDate(event.date)}</span>
+                    </div>
+                    <div class="flex items-center text-gray-600 mb-2">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>${formatTime(event.time)}</span>
+                    </div>
+                    <div class="flex items-center text-gray-600 mb-4">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>${event.location}</span>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-md flex items-center justify-between mb-4">
+                        <div class="text-xs text-indigo-700">
+                            <i class="fas fa-hourglass-half mr-1"></i> Time left
+                        </div>
+                        <div class="text-sm font-medium text-indigo-800 countdown">
+                            ${countdownText}
+                        </div>
+                    </div>
+                    ${isInvitation ? `
+                        <div class="flex space-x-2 mb-4">
+                            <button onclick="respondToEvent('yes'); event.stopPropagation();" class="flex-1 py-2 px-3 bg-green-500 text-white text-sm rounded hover:bg-green-600 focus:outline-none">
+                                <i class="fas fa-check mr-1"></i> Yes
+                            </button>
+                            <button onclick="respondToEvent('maybe'); event.stopPropagation();" class="flex-1 py-2 px-3 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600 focus:outline-none">
+                                <i class="fas fa-question mr-1"></i> Maybe
+                            </button>
+                            <button onclick="respondToEvent('no'); event.stopPropagation();" class="flex-1 py-2 px-3 bg-red-500 text-white text-sm rounded hover:bg-red-600 focus:outline-none">
+                                <i class="fas fa-times mr-1"></i> No
+                            </button>
+                        </div>
+                    ` : ''}
+                    <div class="flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                            ${generateAvatars(event.guests.slice(0, 3))}
+                            ${event.guests.length > 3 ? `
+                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-600 border-2 border-white">
+                                    +${event.guests.length - 3}
+                                </div>
+                            ` : ''}
+                        </div>
+                        <button onclick="showEventDetailsModal(${event.id})" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium focus:outline-none">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => showEventDetailsModal(event.id));
+            
+            return card;
+        }
+        
+        // Helper Functions
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        }
+        
+        function formatTime(timeStr) {
+            const [hours, minutes] = timeStr.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12;
+            return `${hour12}:${minutes} ${ampm}`;
+        }
+        
+        function formatDateTime(dateStr, timeStr) {
+            return `${formatDate(dateStr)} at ${formatTime(timeStr)}`;
+        }
+        
+        function getStatusClass(status) {
+            switch (status) {
+                case 'yes': return 'text-green-600 font-medium';
+                case 'maybe': return 'text-yellow-600';
+                case 'no': return 'text-red-600';
+                default: return 'text-gray-500';
+            }
+        }
+        
+        function getStatusBadge(status) {
+            let bgColor, textColor, icon, text;
+            
+            switch (status) {
+                case 'yes':
+                    bgColor = 'bg-green-100';
+                    textColor = 'text-green-800';
+                    icon = 'fa-check';
+                    text = 'Going';
+                    break;
+                case 'maybe':
+                    bgColor = 'bg-yellow-100';
+                    textColor = 'text-yellow-800';
+                    icon = 'fa-question';
+                    text = 'Maybe';
+                    break;
+                case 'no':
+                    bgColor = 'bg-red-100';
+                    textColor = 'text-red-800';
+                    icon = 'fa-times';
+                    text = 'Not Going';
+                    break;
+                default:
+                    bgColor = 'bg-gray-100';
+                    textColor = 'text-gray-800';
+                    icon = 'fa-clock';
+                    text = 'Pending';
+            }
+            
+            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${bgColor} ${textColor}">
+                <i class="fas ${icon} mr-1"></i> ${text}
+            </span>`;
+        }
+        
+        function generateAvatars(guests) {
+            return guests.map((guest, index) => {
+                const colors = ['bg-indigo-500', 'bg-pink-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500'];
+                const color = colors[index % colors.length];
+                const initials = guest.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                
+                return `
+                    <div class="w-8 h-8 rounded-full ${color} flex items-center justify-center text-xs font-medium text-white border-2 border-white" title="${guest.name}">
+                        ${initials}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-login for demo purposes (comment out in production)
+            // currentUser = users[0];
+            // document.getElementById('userGreeting').textContent = `Hello, ${currentUser.name}`;
+            // document.getElementById('loggedOutNav').classList.add('hidden');
+            // document.getElementById('loggedInNav').classList.remove('hidden');
+            // document.getElementById('loginRequiredMessage').classList.add('hidden');
+            // document.getElementById('dashboard').classList.remove('hidden');
+            // renderMyEvents();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'945ec141c33cfed1',t:'MTc0ODI3ODA1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
